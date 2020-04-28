@@ -76,7 +76,6 @@ public class FXMLController {
     		this.txtResult.appendText(result);
     		
     	}catch(Exception e) {
-    		e.printStackTrace();
     		this.txtResult.appendText("Inserire solo valori numerici!");
     		
     	}
