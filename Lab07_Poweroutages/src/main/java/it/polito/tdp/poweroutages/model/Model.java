@@ -1,5 +1,6 @@
 package it.polito.tdp.poweroutages.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.polito.tdp.poweroutages.DAO.PowerOutageDAO;
@@ -16,4 +17,9 @@ public class Model {
 		return podao.getNercList();
 	}
 
+	public List<Blackout> findWorstCase(Nerc nerc, int maxY, int maxH) {
+		
+		Ricerca ricerca = new Ricerca();
+		return ricerca.getWorstCase(new ArrayList<>(podao.getBlackoutFromNERC(nerc)), maxY, maxH);
+	}
 }
