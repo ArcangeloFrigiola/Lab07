@@ -51,35 +51,43 @@ public class FXMLController {
     void getWorstCaseAnalysis(ActionEvent event) {
     	
     	this.txtResult.clear();
+    	int maxY = 0;
+    	int maxH = 0;
+    	int totPeople = 0;
+		int totHours = 0;
+		
     	try{
     		
-    		int maxY = Integer.parseInt(this.txtMaxYears.getText());
-    		int maxH = Integer.parseInt(this.txtMaxHours.getText());
-    		List<Blackout> listaBlackout = new ArrayList<>(this.model.findWorstCase(this.boxChoice.getValue(), maxY, maxH));
+    		maxY = Integer.parseInt(this.txtMaxYears.getText());
+    		maxH = Integer.parseInt(this.txtMaxHours.getText());
     		
-    		if(listaBlackout.size()==0) {
-    			this.txtResult.appendText("Nessuna soluzione trovata!\n");
-    		}
-    		int totPeople = 0;
-    		int totHours = 0;
-    		for(Blackout b: listaBlackout) {
-    			totPeople+=b.getCustomersAffected();
-    			totHours+=b.getOreDisservizio();
-    		}
-    		
-    		String result = "Tot people affected: "+totPeople+"\nTot hours of outage: "+totHours+"\n";
-    		for(Blackout b: listaBlackout) {
-    			
-    			result += b.toString();
-    		}
-    		
-    		this.txtResult.appendText(result);
-    		
-    	}catch(Exception e) {
-    		this.txtResult.appendText("Inserire solo valori numerici!");
-    		
-    	}
+		} catch (Exception e) {
+			
+			this.txtResult.appendText("Inserire solo valori numerici!\n");
+
+		}
     	
+		try {
+			List<Blackout> listaBlackout = new ArrayList<>(
+					this.model.findWorstCase(this.boxChoice.getValue(), maxY, maxH));
+
+			for (Blackout b : listaBlackout) {
+				totPeople += b.getCustomersAffected();
+				totHours += b.getOreDisservizio();
+			}
+
+			String result = "Tot people affected: " + totPeople + "\nTot hours of outage: " + totHours + "\n";
+			for (Blackout b : listaBlackout) {
+
+				result += b.toString();
+			}
+
+			this.txtResult.appendText(result);
+		} catch (NullPointerException npe) {
+
+			this.txtResult.appendText("Soluzione al problema non esistente!\n");
+		}
+
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

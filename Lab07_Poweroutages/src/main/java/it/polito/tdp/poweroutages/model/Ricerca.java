@@ -40,23 +40,21 @@ public class Ricerca {
 	 */
 	private void cerca(List<Blackout> parziale, int livello) {
 		
+		int temp = calcolaBest(parziale);
+		if (temp > best) {
+			best = temp;
+			soluzione = new ArrayList<>(parziale);
+		}
 		
 		//CASO GENERALE
 		for(Blackout b: listaBlackout) {
 			
-			if((!parziale.contains(b)) && blackoutInseribile(parziale, b)) {
+			if((!parziale.contains(b)) && blackoutInseribile(parziale, b, livello)) {
 				
 				parziale.add(b);
 				cerca(parziale, livello+b.getOreDisservizio());
 				parziale.remove(parziale.size()-1);
 				
-			}else { //CONDIZIONE DI USCITA
-				int temp = calcolaBest(parziale);
-				if (temp > best) {
-					best = temp;
-					soluzione = new ArrayList<>(parziale);
-				}
-				return;
 			}
 		}
 		
@@ -71,7 +69,7 @@ public class Ricerca {
 		return ris;
 	}
 
-	private boolean blackoutInseribile(List<Blackout> parziale, Blackout b) {
+	private boolean blackoutInseribile(List<Blackout> parziale, Blackout b, int oreBlackout) {
 
 		//Controllo che gli anni di differenza tra la prima e l'ultima data non siano maggiori a maxY
 		if (parziale.size() > 0) {
@@ -82,11 +80,7 @@ public class Ricerca {
 		}
 		
 		//Controllo che non venga superato il limite massimo di ore
-		int oreTotaliBKOUT = b.getOreDisservizio();
-		
-		for(Blackout bl: parziale) {
-			oreTotaliBKOUT += bl.getOreDisservizio();
-		}
+		int oreTotaliBKOUT = b.getOreDisservizio()+oreBlackout;
 		
 		if(oreTotaliBKOUT>=maxH) {
 

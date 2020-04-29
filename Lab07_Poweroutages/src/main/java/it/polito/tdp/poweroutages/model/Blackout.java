@@ -1,6 +1,7 @@
 package it.polito.tdp.poweroutages.model;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 
 public class Blackout {
 
@@ -14,11 +15,11 @@ public class Blackout {
 	 * @param oreDisservizio
 	 * @param customersAffected
 	 */
-	public Blackout(LocalDateTime data_inizio, LocalDateTime data_fine, int oreDisservizio, int customersAffected) {
+	public Blackout(LocalDateTime data_inizio, LocalDateTime data_fine, int customersAffected) {
 		super();
 		this.data_inizio = data_inizio;
 		this.data_fine = data_fine;
-		this.oreDisservizio = oreDisservizio;
+		this.oreDisservizio = 0;
 		this.customersAffected = customersAffected;
 	}
 	public LocalDateTime getData_inizio() {
@@ -33,12 +34,7 @@ public class Blackout {
 	public void setData_fine(LocalDateTime data_fine) {
 		this.data_fine = data_fine;
 	}
-	public int getOreDisservizio() {
-		return oreDisservizio;
-	}
-	public void setOreDisservizio(int oreDisservizio) {
-		this.oreDisservizio = oreDisservizio;
-	}
+	
 	public int getCustomersAffected() {
 		return customersAffected;
 	}
@@ -46,9 +42,20 @@ public class Blackout {
 		this.customersAffected = customersAffected;
 	}
 	
+	public int getOreDisservizio() {
+		
+		Calendar firstDate = Calendar.getInstance();
+		firstDate.set(data_inizio.getYear(), data_inizio.getMonthValue(), 
+				data_inizio.getDayOfMonth(), data_inizio.getHour(), data_inizio.getMinute());
+		Calendar secondDate = Calendar.getInstance();
+		secondDate.set(data_fine.getYear(), data_fine.getMonthValue(), 
+				data_fine.getDayOfMonth(), data_fine.getHour(), data_fine.getMinute());
+		
+		return this.oreDisservizio = (int) ((secondDate.getTimeInMillis()-firstDate.getTimeInMillis())/1000)/60/60;
+	}
 	@Override
 	public String toString() {
-		return data_fine.getYear()+" "+data_inizio.toString()+" "+data_fine.toString()+" "+oreDisservizio+" "+customersAffected+"\n";
+		return data_fine.getYear()+" "+data_inizio.toString()+" "+data_fine.toString()+" "+this.getOreDisservizio()+" "+customersAffected+"\n";
 	}
 	
 	

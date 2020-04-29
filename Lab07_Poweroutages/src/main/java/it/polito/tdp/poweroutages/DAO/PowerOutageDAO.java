@@ -62,13 +62,7 @@ public class PowerOutageDAO {
 				LocalDateTime dataInizio = res.getTimestamp("date_event_began").toLocalDateTime();
 				LocalDateTime dataFine = res.getTimestamp("date_event_finished").toLocalDateTime();
 				
-				Calendar firstDate = Calendar.getInstance();
-				firstDate.setTime(res.getDate("date_event_began"));
-				Calendar secondDate = Calendar.getInstance();
-				secondDate.setTime(res.getDate("date_event_finished"));
-				int oreBK = (int) ((secondDate.getTimeInMillis()-firstDate.getTimeInMillis())/1000)/60/60;
-				
-				Blackout b = new Blackout(dataInizio, dataFine, oreBK, res.getInt("customers_affected"));
+				Blackout b = new Blackout(dataInizio, dataFine, res.getInt("customers_affected"));
 				listaBlackout.add(b);
 				
 			}

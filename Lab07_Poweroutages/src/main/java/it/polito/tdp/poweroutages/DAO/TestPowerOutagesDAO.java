@@ -35,7 +35,7 @@ public class TestPowerOutagesDAO {
 			
 			for(Blackout b: temp) {
 				System.out.print(b);
-				System.out.println("Ultimo anno: "+b.getData_fine().getYear()+" Primo Anno: "+b.getData_inizio().getYear());
+				//System.out.println("Ultimo anno: "+b.getData_fine().getYear()+" Primo Anno: "+b.getData_inizio().getYear());
 			}
 			
 		
