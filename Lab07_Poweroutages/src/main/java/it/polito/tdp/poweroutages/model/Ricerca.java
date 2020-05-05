@@ -44,17 +44,17 @@ public class Ricerca {
 		if (temp > best) {
 			best = temp;
 			soluzione = new ArrayList<>(parziale);
-		}
-		
-		//CASO GENERALE
-		for(Blackout b: listaBlackout) {
-			
-			if((!parziale.contains(b)) && blackoutInseribile(parziale, b, livello)) {
-				
-				parziale.add(b);
-				cerca(parziale, livello+b.getOreDisservizio());
-				parziale.remove(parziale.size()-1);
-				
+		} else {
+			// CASO GENERALE
+			for (Blackout b : listaBlackout) {
+
+				if ((!parziale.contains(b)) && blackoutInseribile(parziale, b, livello)) {
+
+					parziale.add(b);
+					cerca(parziale, livello + b.getOreDisservizio());
+					parziale.remove(parziale.size() - 1);
+
+				}
 			}
 		}
 		

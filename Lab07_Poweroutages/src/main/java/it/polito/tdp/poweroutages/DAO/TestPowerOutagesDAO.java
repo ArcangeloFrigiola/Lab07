@@ -30,7 +30,7 @@ public class TestPowerOutagesDAO {
 			System.out.println("Connection Test PASSED");
 			
 			PowerOutageDAO dao = new PowerOutageDAO();
-			List<Blackout> temp = new ArrayList<>(dao.getBlackoutFromNERC(new Nerc(3, "MAAC")));
+			List<Blackout> temp = new ArrayList<>(dao.getBlackoutFromNERC(new Nerc(2, "MAAC")));
 			
 			
 			for(Blackout b: temp) {
